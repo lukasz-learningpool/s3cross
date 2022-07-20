@@ -2,7 +2,7 @@ import os
 import json
 import boto3
 print('Loading function')
-def lambda_handler(event, context):
+def s3crossaccreplication_handler(event, context):
     s3 = boto3.client('s3')
     target_bucket = os.environ.get('destination_s3')
     source_bucket = event['Records'][0]['s3']['bucket']['name']
