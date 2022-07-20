@@ -9,13 +9,13 @@ def lambda_handler(event, context):
     key = event['Records'][0]['s3']['object']['key']
     key = key.replace("+", " ")
     copy_source = {'Bucket':source_bucket, 'Key':key}
-    prefix = os.environ.get('prefix')
+    prefix = os.environ.get('destination_prefix')
     keydest = prefix + (key[key.rfind("/")+1:]).replace(" ", "_")
     print ('Key:',key)
     print (keydest)
     sts_client = boto3.client('sts')
     assumedRoleObject=sts_client.assume_role (
-        RoleArn="arn:aws:iam::805327453052:role/lambda-cross-replication",
+        RoleArn="arn:aws:iam::007712106137:role/crossaccount-autoreplication-lambda-assume-role",
         RoleSessionName="AssumeRoleSession1"
         )
     credentials=assumedRoleObject['Credentials']
